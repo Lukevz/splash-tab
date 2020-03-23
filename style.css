@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+    body {
+      width: 100vh;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: "Open Sans", sans-serif;
+     }
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+a:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+#weather {
+    z-index: 999999;
+    position: absolute;
+}
+    #bgIMG{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: block;
+        top:0;
+        z-index: 1;
+        }
+         .overlay-wrap {
+             position: absolute;
+          display: table;
+          width: 100vw;
+          height: 100vh;
+             z-index: 99;
+         }
+         .overlay {
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+          width: 100%;
+          height: 100%;
+          color: white;
+          background: -webkit-radial-gradient(rgba(250,250,250,0.1) 0%,rgba(0,0,0,0.5) 100%); /* Chrome10-25,Safari5.1-6 */
+      background: radial-gradient(rgba(250,250,250,0.1) 0%,rgba(0,0,0,0.5) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+     }
+    .overlay #time {
+        font-size: 100px;
+        font-weight: bolder;
+        border: 10px solid #ffffff;
+        width: fit-content;
+        display: block;
+        padding: 0 30px;
+        margin: 0 auto;
+        text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.65);
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+    }
+     .overlay p {
+      font-size: 4em;
+         padding: 0 10%;
+      font-weight: 500;
+      text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.65);
+     }
+     .info-item {
+      color: white;
+      opacity: 1;
+      text-decoration: none;
+      -webkit-transition: all 0.2s;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 1.7px;
+      position:absolute;
+      padding: 2em;
+         width: auto;
+         height: auto;
+         display: block;
+     }
+     .info-item#date {
+      left: 0;
+      text-align: left;
+         top: 0;
+     }
+     .info-item#credit {
+      right: 0;
+      text-align: right;
+         top: 0;
+     }
+    .info-item#counter {
+        bottom: 0;
+        left: 0;
+        text-align: right;
+    }
+      @-webkit-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+      @-moz-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+      @keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+
+      .fade-in {
+        opacity:0;  /* make things invisible upon start */
+        -webkit-animation:fadeIn ease-in 1.2s;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+        -moz-animation:fadeIn ease-in 1.2s;
+        animation:fadeIn ease-in 1.2s;
+
+        -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+        -moz-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-duration:0.2s;
+        -moz-animation-duration:0.2s;
+        animation-duration:0.2s;
+      }
+
+
+
+

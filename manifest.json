@@ -1,0 +1,15 @@
+{
+  "name": "Splash Tab",
+  "manifest_version": 2,
+  "version": "2.0",
+  "icons": {
+    "16": "splash16.png",
+    "64": "splash64.png"
+  },
+  "permissions": [
+    "geolocation"
+  ],
+  "chrome_url_overrides" : {
+    "newtab": "splashtab.html"
+  }
+}
