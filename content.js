@@ -1,7 +1,19 @@
 window.onload = function() {
 
-	// IMG LOAD
-	fetch('https://api.unsplash.com/photos/random?&query=nature&client_id=gg5HAC8CpRjv5PSF2lxRfKzFnEKFQvN-Vb-QKNvpNlA&orientation=landscape&squarish')
+	localStorage.setItem('api_store', 'https://api.unsplash.com/photos/random?&query=nature&client_id=gg5HAC8CpRjv5PSF2lxRfKzFnEKFQvN-Vb-QKNvpNlA&orientation=landscape&squarish');
+
+	imgLoad();
+
+	getSeason();
+
+	timeLoader();
+
+	dateLoader();
+}
+
+// IMG LOAD
+function imgLoad () {
+	fetch(localStorage.getItem('api_store'))
 		.then((response) => {
 			return response.json();
 		})
@@ -17,52 +29,48 @@ window.onload = function() {
 			// USER CREDIT
 			var user_name = data.user.name;
 			var user_link = data.user.links.html;
-			document.getElementById("user").innerText = "Photo: " + user_name;
+			document.getElementById("user").innerText = user_name;
 			document.getElementById("user").href = user_link;
+
+			// COLOR LOAD
+			var mainColor = data.color;
+			document.body.style.backgroundColor = mainColor;
 		});
+}
 
-	// SEASON DETERMINANT
-	var geoSuccess = function(position) {
-		startPos = position;
-
-		var lat = startPos.coords.latitude;
-		var long = startPos.coords.longitude;
-		console.log(lat,long);
-	};
-	navigator.geolocation.getCurrentPosition(geoSuccess);
-
-
-	// TIME LOADER
+function timeLoader () {
 	(function () {
-	    function checkTime(i) {
-	        return (i < 10) ? "0" + i : i;
-	    }
+		function checkTime(i) {
+			return (i < 10) ? "0" + i : i;
+		}
 
-	    function startTime() {
-	        var today = new Date(),
-	            h = parseInt(checkTime(today.getHours()), 10),
-	            m = checkTime(today.getMinutes());
-	            // s = checkTime(today.getSeconds());
-	            var tag = 'AM';
-		  checkTime();
-		  if(h > 12) {
-		   h -= 12
-		   tag = 'PM';
-		  }
-		  if(h == 0) {
-		  	h = 12
-		  }
-	        document.getElementById('time').innerHTML = h + ":" + m;
-	        // document.getElementById('ampm').innerHTML = tag;
-	        t = setTimeout(function () {
-	            startTime()
-	        }, 60000);
-	    }
-	    startTime();
+		function startTime() {
+			var today = new Date(),
+				h = parseInt(checkTime(today.getHours()), 10),
+				m = checkTime(today.getMinutes());
+			// s = checkTime(today.getSeconds());
+			var tag = 'AM';
+			checkTime();
+			if(h > 12) {
+				h -= 12
+				tag = 'PM';
+			}
+			if(h == 0) {
+				h = 12
+			}
+			document.getElementById('time').innerHTML = h + ":" + m;
+			// document.getElementById('ampm').innerHTML = tag;
+			t = setTimeout(function () {
+				startTime()
+			}, 60000);
+		}
+		startTime();
 	})();
+}
 
-	// DATE LOADER
-	document.getElementById("date").innerHTML = formatAMPM();
+// DATE LOADER
+function dateLoader () {
+	document.getElementById("date").innerHTML = 'on ' + formatAMPM();
 
 	function formatAMPM() {
 		var d = new Date(),
@@ -71,4 +79,15 @@ window.onload = function() {
 		// return days[d.getDay()]+' '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
 		return months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
 	}
-};
+}
+// SEASON DETERMINANT
+function getSeason () {
+	var geoSuccess = function(position) {
+		startPos = position;
+
+		var lat = startPos.coords.latitude;
+		var long = startPos.coords.longitude;
+		console.log(lat,long);
+	};
+	navigator.geolocation.getCurrentPosition(geoSuccess);
+}
