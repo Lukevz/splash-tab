@@ -1,10 +1,14 @@
 window.onload = function() {
 
-	localStorage.setItem('api_store', 'https://api.unsplash.com/photos/random?&query=nature&client_id=gg5HAC8CpRjv5PSF2lxRfKzFnEKFQvN-Vb-QKNvpNlA&orientation=landscape&squarish');
+	getSeason();
+	var weather_description = localStorage.getItem('weather_type');
+
+	localStorage.setItem('api_store',
+		'https://api.unsplash.com/photos/random?&query=' +
+		weather_description +
+		'&client_id=gg5HAC8CpRjv5PSF2lxRfKzFnEKFQvN-Vb-QKNvpNlA&orientation=landscape&squarish');
 
 	imgLoad();
-
-	getSeason();
 
 	timeLoader();
 
@@ -82,12 +86,22 @@ function dateLoader () {
 }
 // SEASON DETERMINANT
 function getSeason () {
-	var geoSuccess = function(position) {
+	var geoSuccess = function (position) {
 		startPos = position;
 
 		var lat = startPos.coords.latitude;
 		var long = startPos.coords.longitude;
-		console.log(lat,long);
+		var weather_link = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&appid=caeb41fe8b916eb07088d1cbe4b528f9';
+
+		fetch(weather_link)
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				// ASSIGN WEATHER DESCRIPTION
+				weather_description = data.weather[0].main;
+				localStorage.setItem('weather_type', weather_description);
+			});
 	};
 	navigator.geolocation.getCurrentPosition(geoSuccess);
 }
