@@ -99,7 +99,7 @@ function getSeason () {
 			})
 			.then((data) => {
 				// ASSIGN WEATHER DESCRIPTION
-				weather_description = data.weather[0].main;
+				weather_description = data.weather[0].description;
 				localStorage.setItem('weather_type', weather_description);
 			});
 	};
