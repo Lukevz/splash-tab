@@ -1,18 +1,34 @@
 window.onload = function() {
 
-	getSeason();
-	var weather_description = localStorage.getItem('weather_type');
+	// getSeason();
+	// var weather_description = localStorage.getItem('weather_type');
 
-	localStorage.setItem('api_store',
-		'https://api.unsplash.com/photos/random?&query=' +
-		weather_description +
-		'&client_id=gg5HAC8CpRjv5PSF2lxRfKzFnEKFQvN-Vb-QKNvpNlA&orientation=landscape&squarish');
+	var today = new Date().getHours();
+	if (today >= 4 && today <= 12) {
+		var imgTime = 'morning';
+	}
+	if (today >= 12 && today <= 17) {
+		var imgTime = 'day';
+	}
+	if (today >= 17 && today <= 24) {
+		var imgTime = 'night';
+	}
+	if (today >= 0 && today <= 4) {
+		var imgTime = 'night';
+	}
 
-	imgLoad();
+	dateLoader();
 
 	timeLoader();
 
-	dateLoader();
+	localStorage.setItem('api_store',
+		'https://api.unsplash.com/photos/random?' +
+		'&client_id=gg5HAC8CpRjv5PSF2lxRfKzFnEKFQvN-Vb-QKNvpNlA&orientation=landscape&squarish&query=' + imgTime +',nature');
+
+	console.log('https://api.unsplash.com/photos/random?' +
+		'&client_id=gg5HAC8CpRjv5PSF2lxRfKzFnEKFQvN-Vb-QKNvpNlA&orientation=landscape&squarish&query=' + imgTime +',nature');
+
+	imgLoad();
 }
 
 // IMG LOAD
@@ -74,7 +90,7 @@ function timeLoader () {
 
 // DATE LOADER
 function dateLoader () {
-	document.getElementById("date").innerHTML = 'on ' + formatAMPM();
+	document.getElementById("date").innerHTML = formatAMPM();
 
 	function formatAMPM() {
 		var d = new Date(),
@@ -85,23 +101,23 @@ function dateLoader () {
 	}
 }
 // SEASON DETERMINANT
-function getSeason () {
-	var geoSuccess = function (position) {
-		startPos = position;
-
-		var lat = startPos.coords.latitude;
-		var long = startPos.coords.longitude;
-		var weather_link = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&appid=caeb41fe8b916eb07088d1cbe4b528f9';
-
-		fetch(weather_link)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				// ASSIGN WEATHER DESCRIPTION
-				weather_description = data.weather[0].description;
-				localStorage.setItem('weather_type', weather_description);
-			});
-	};
-	navigator.geolocation.getCurrentPosition(geoSuccess);
-}
+// function getSeason () {
+// 	var geoSuccess = function (position) {
+// 		startPos = position;
+//
+// 		var lat = startPos.coords.latitude;
+// 		var long = startPos.coords.longitude;
+// 		var weather_link = 'https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&appid=caeb41fe8b916eb07088d1cbe4b528f9';
+//
+// 		fetch(weather_link)
+// 			.then((response) => {
+// 				return response.json();
+// 			})
+// 			.then((data) => {
+// 				// ASSIGN WEATHER DESCRIPTION
+// 				weather_description = data.weather[0].description;
+// 				localStorage.setItem('weather_type', weather_description);
+// 			});
+// 	};
+// 	navigator.geolocation.getCurrentPosition(geoSuccess);
+// }
